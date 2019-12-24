@@ -1,0 +1,246 @@
+==========================================
+[info]: Definições do Grafo:
+==========================================
+
+Quantidade de Vertices:10
+Quantidade maxima de conexoes:10
+
+Quantidade de conexoes por Vertice
+T  0 = 2  CE 0	 Altura 0  AlturaR 0
+T  1 = 2  CE 3	 Altura 0  AlturaR 0
+T  2 = 1  CE 2	 Altura 0  AlturaR 0
+T  3 = 1  CE 1	 Altura 0  AlturaR 0
+T  4 = 2  CE 2	 Altura 0  AlturaR 0
+T  5 = 1  CE 3	 Altura 0  AlturaR 0
+T  6 = 1  CE 2	 Altura 0  AlturaR 0
+T  7 = 1  CE 2	 Altura 0  AlturaR 0
+T  8 = 1  CE 4	 Altura 0  AlturaR 0
+T  9 = 0  CE 0	 Altura 0  AlturaR 0
+
+Matriz de Adjacencia:
+t  0   0  1  1  0  0  0  0  0  0  0 
+t  1   0  0  0  1  1  0  0  0  0  0 
+t  2   0  0  0  0  0  1  0  0  0  0 
+t  3   0  0  0  0  0  0  1  0  0  0 
+t  4   0  0  0  0  0  0  0  1  1  0 
+t  5   0  0  0  0  0  0  0  1  0  0 
+t  6   0  0  0  0  0  0  0  0  1  0 
+t  7   0  0  0  0  0  0  0  0  1  0 
+t  8   0  0  0  0  0  0  0  0  0  1 
+t  9   0  0  0  0  0  0  0  0  0  0 
+Grafo nao ponderado.
+Valor de menor 1
+Altura: 1
+Valor de menor 1
+Altura: 1
+Valor de menor 2
+Altura: 2
+Valor de menor 2
+Altura: 2
+Valor de menor 2
+Altura: 2
+Valor de menor 3
+Altura: 3
+Valor de menor 3
+Altura: 3
+Valor de menor 4
+Altura: 4
+==========================================
+[info]: Definições do Grafo:
+==========================================
+
+Quantidade de Vertices:10
+Quantidade maxima de conexoes:10
+
+Quantidade de conexoes por Vertice
+T  0 = 2  CE 0	 Altura 0  AlturaR 0
+T  1 = 2  CE 3	 Altura 1  AlturaR 1
+T  2 = 1  CE 2	 Altura 1  AlturaR 1
+T  3 = 1  CE 1	 Altura 2  AlturaR 2
+T  4 = 2  CE 2	 Altura 2  AlturaR 2
+T  5 = 1  CE 3	 Altura 2  AlturaR 2
+T  6 = 1  CE 2	 Altura 3  AlturaR 3
+T  7 = 1  CE 2	 Altura 3  AlturaR 3
+T  8 = 1  CE 4	 Altura 4  AlturaR 4
+T  9 = 0  CE 0	 Altura 5  AlturaR 5
+
+Matriz de Adjacencia:
+t  0   0  1  1  0  0  0  0  0  0  0 
+t  1   0  0  0  1  1  0  0  0  0  0 
+t  2   0  0  0  0  0  1  0  0  0  0 
+t  3   0  0  0  0  0  0  1  0  0  0 
+t  4   0  0  0  0  0  0  0  1  1  0 
+t  5   0  0  0  0  0  0  0  1  0  0 
+t  6   0  0  0  0  0  0  0  0  1  0 
+t  7   0  0  0  0  0  0  0  0  1  0 
+t  8   0  0  0  0  0  0  0  0  0  1 
+t  9   0  0  0  0  0  0  0  0  0  0 
+Grafo nao ponderado.
+==========================================
+[info]: Definições da Codificacao TLE:
+==========================================
+
+Quantidade de Tarefas:10
+Quantidade de Processadores:2
+Valor de makespan:0
+
+Relacao de alocacao entre processadores e tarefas
+p0 
+p1 
+==========================================
+[info]: Definições da Codificacao TLE:
+==========================================
+
+Quantidade de Tarefas:10
+Quantidade de Processadores:2
+Valor de makespan:0
+
+Relacao de alocacao entre processadores e tarefas
+p0 t0 -> t1 -> t5 -> t7 -> t8 -> 
+p1 t2 -> t4 -> t3 -> t6 -> t9 -> 
+
+Checando processador 0
+Resposta dos pais de 0: S1M
+
+Checando processador 1
+Resposta dos pais de 2: NA0
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 0
+Tempos das CPU[1]: 1
+
+Checando processador 0
+Tarefa 0 Concluida!
+
+Checando processador 1
+Resposta dos pais de 2: S1M
+Tarefa t2 ainda nao acabou!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 0
+Tempos das CPU[1]: 2
+
+Checando processador 0
+Resposta dos pais de 1: S1M
+Tarefa t1 ainda nao acabou!
+
+Checando processador 1
+Resposta dos pais de 2: S1M
+Tarefa t2 ainda nao acabou!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 1
+Tempos das CPU[1]: 3
+
+Checando processador 0
+Resposta dos pais de 1: S1M
+Tarefa t1 ainda nao acabou!
+
+Checando processador 1
+Resposta dos pais de 2: S1M
+Tarefa t2 ainda nao acabou!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 2
+Tempos das CPU[1]: 4
+
+Checando processador 0
+Resposta dos pais de 1: S1M
+Tarefa t1 ainda nao acabou!
+
+Checando processador 1
+Tarefa 2 Concluida!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 3
+Tempos das CPU[1]: 4
+
+Checando processador 0
+Tarefa 1 Concluida!
+
+Checando processador 1
+Resposta dos pais de 4: S1M
+Tarefa t4 ainda nao acabou!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 3
+Tempos das CPU[1]: 5
+
+Checando processador 0
+Resposta dos pais de 5: S1M
+Tarefa t5 ainda nao acabou!
+
+Checando processador 1
+Resposta dos pais de 4: S1M
+Tarefa t4 ainda nao acabou!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 4
+Tempos das CPU[1]: 6
+
+Checando processador 0
+Resposta dos pais de 5: S1M
+Tarefa t5 ainda nao acabou!
+
+Checando processador 1
+Tarefa 4 Concluida!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 5
+Tempos das CPU[1]: 6
+
+Checando processador 0
+Resposta dos pais de 5: S1M
+Tarefa t5 ainda nao acabou!
+
+Checando processador 1
+Resposta dos pais de 3: S1M
+Tarefa t3 ainda nao acabou!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 6
+Tempos das CPU[1]: 7
+
+Checando processador 0
+Tarefa 5 Concluida!
+
+Checando processador 1
+Tarefa 3 Concluida!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 6
+Tempos das CPU[1]: 7
+
+Checando processador 0
+Resposta dos pais de 7: S1M
+Tarefa t7 ainda nao acabou!
+
+Checando processador 1
+Resposta dos pais de 6: S1M
+Tarefa t6 ainda nao acabou!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 7
+Tempos das CPU[1]: 8
+
+Checando processador 0
+Resposta dos pais de 7: S1M
+Tarefa t7 ainda nao acabou!
+
+Checando processador 1
+Resposta dos pais de 6: S1M
+Tarefa t6 ainda nao acabou!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 8
+Tempos das CPU[1]: 9
+
+Checando processador 0
+Tarefa 7 Concluida!
+
+Checando processador 1
+Tarefa 6 Concluida!
+
+Relatorio das CPUS!!!
+Tempos das CPU[0]: 8
+Tempos das CPU[1]: 9
