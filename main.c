@@ -7,7 +7,9 @@
 #include<string.h>
 
 #include"experimento.h"
+#include"populacao.h"
 #include"code-tle.h"
+#include"code-mse.h"
 
 #include"grafo.h"
 #include"grafo-matriz.h"
@@ -19,7 +21,7 @@ int main(int argc, char **argv){
    debug_Experimento(exp);
 
    executa_Experimento(exp);
-
+   
    libera_Experimento(exp);
 
    /*

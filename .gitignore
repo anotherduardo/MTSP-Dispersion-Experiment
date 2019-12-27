@@ -1,0 +1,6 @@
+# Para ignorar todos os arquivos e sub-diretório localizados no diretório benchmark
+benchmark/
+videoAulas/
+log/
+# Para ignorar todos os arquivos Java compilados
+#*.class

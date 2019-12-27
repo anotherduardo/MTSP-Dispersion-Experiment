@@ -35,3 +35,5 @@ void ordena_Sequencia_Exec(GrafoMatriz *gr, int *sequencia);
 int checa_Precedentes(GrafoMatriz *gr, int *done_tasks, int task);
 
 void debug_GrafoMatriz(GrafoMatriz* gf);
+
+void shuffle(int *array, size_t n);

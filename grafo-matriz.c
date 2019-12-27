@@ -87,7 +87,7 @@ void libera_GrafoMatriz(GrafoMatriz *gr){
       free(gr);
    }
    else{
-      printf("[erro]:[libera_Grafo] Grafo nao vazio!\n");
+      printf("[erro]:[libera_Grafo] Grafo vazio!\n");
    }
 
 }//fim[libera_GrafoMatriz]
@@ -360,3 +360,20 @@ void debug_GrafoMatriz(GrafoMatriz* gf){
       printf("Grafo nao ponderado.\n");
 
 }//fim[debug_GrafoMatriz]
+
+void shuffle(int *array, size_t n){
+
+   //Fonte: https://stackoverflow.com/questions/6127503/shuffle-array-in-c
+   if (n > 1){
+
+      size_t i;
+      for (i = 0; i < n - 1; i++){
+
+         size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+         int t = array[j];
+         array[j] = array[i];
+         array[i] = t;
+      }
+   }
+
+}//fim[shuffle]

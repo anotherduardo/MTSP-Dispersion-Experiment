@@ -4,8 +4,8 @@
 
 #include"grafo-matriz.h"
 
-#define TRUE 1          // S1M
-#define FALSE 0         // NA0
+#define TRUE 1   // S1M
+#define FALSE 0  // NA0
 
 typedef struct tle TLE;
 
@@ -15,6 +15,10 @@ void libera_TLE(TLE *code);
 
 void distribui_Sequencia_TLE(TLE *code, GrafoMatriz *dag);
 
-void calcula_makespan_TLE(TLE *code, GrafoMatriz *dag);
+void atribuir_ID_TLE(TLE *code, int id);
+
+int recebe_makespan_TLE(TLE *code);
+
+void calcula_makespan_TLE(TLE *code, GrafoMatriz *dag, short debug);
 
 void debug_TLE(TLE *code);
