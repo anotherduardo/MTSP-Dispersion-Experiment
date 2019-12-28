@@ -46,7 +46,7 @@ TLE *cria_TLE(GrafoMatriz *dag, int qtd_processador){
    }
 
    // Atribuindo a sequencia de tarefas
-   distribui_Sequencia_TLE(code, dag);
+   distribui_Sequencia_TLE(code, dag, FALSE);
 
    return code;
 
@@ -68,11 +68,12 @@ void libera_TLE(TLE *code){
 
 }//fim[libera_TLE]
 
-void distribui_Sequencia_TLE(TLE *code, GrafoMatriz *dag){
+void distribui_Sequencia_TLE(TLE *code, GrafoMatriz *dag, short tipo){
 
    int i, j;   // para laços
    int *combo; // sequencia de tarefas
-   int flag;   // identifica se sequencia é válida
+   int slot;   // Guarda o slot sorteado pelo rand
+
 
    combo = (int*) malloc(code->qtd_task * sizeof(int));
 
@@ -102,17 +103,32 @@ void distribui_Sequencia_TLE(TLE *code, GrafoMatriz *dag){
    ordena_Sequencia_Exec(dag, combo);
 
    // Distribuindo as tarefas aos processadores
-   i = 0;
-   while(i < code->qtd_task){
-      for(j = 0; j < code->qtd_processador; j++){
+   // [info] Distribuição Sequencial!
+   // Neste modo: uma tarefa é distribuída para cada processador
+   //  -> Melhores resultados e Balanceamento de carga mais ideal
+   if(tipo == TRUE){
+      i = 0;
+      while(i < code->qtd_task){
+         for(j = 0; j < code->qtd_processador; j++){
 
-         if(i < code->qtd_task){
-            code->alocacao[j][code->grau_processador[j]] = combo[i];
-            code->grau_processador[j]++;
-            i++;
+            if(i < code->qtd_task){
+               code->alocacao[j][code->grau_processador[j]] = combo[i];
+               code->grau_processador[j]++;
+               i++;
+            }
          }
       }
-   }
+   }//fim[distribuicao melhorada]
+   else{
+      for(i = 0; i < code->qtd_task; i++){
+
+         slot = rand()% code->qtd_processador;
+         code->alocacao[slot][code->grau_processador[slot]] = combo[i];
+         code->grau_processador[slot]++;
+
+      }//fim[distribuindo tarefas]
+
+   }//fim[distr]
 
    /*[debug] Verificar o grau dos processadores
    printf("\nGrau dos processadores:\n");
@@ -173,14 +189,24 @@ void calcula_makespan_TLE(TLE *code, GrafoMatriz *dag, short debug){
    }
 
    // Iniciando valores de custo das tarefas iniciais nos processadores
-   for(i = 0; i < code->qtd_processador; i++)
-       cpu_cost[i] = recebe_CustoExec(dag, code->alocacao[i][0]);
+   for(i = 0; i < code->qtd_processador; i++){
+
+      if(code->grau_processador[i] > 0)
+         cpu_cost[i] = recebe_CustoExec(dag, code->alocacao[i][0]);
+   }
 
    // Segundo pacote STG, tarefa 0 não tem custo e, portanto,
-   // não significa nada no fluxo temporal
-   done_tasks[0] = TRUE;
-   cpu_points[0]++;
-   cpu_cost[0] = recebe_CustoExec(dag, code->alocacao[0][cpu_points[0]]);
+   // não significa nada no fluxo temporal.
+   for(i = 0; i < code->qtd_processador; i++){
+      if(code->alocacao[i][0] == 0){
+         done_tasks[0] = TRUE;
+         if(code->grau_processador[i] > 1){
+            cpu_points[i]++;
+            cpu_cost[i] = recebe_CustoExec(dag, code->alocacao[i][cpu_points[i]]);
+         }
+      }
+
+   }//fim[atualizando custos iniciais]
 
    //[debug] Verificando os custos iniciais
    if(debug){
@@ -201,30 +227,75 @@ void calcula_makespan_TLE(TLE *code, GrafoMatriz *dag, short debug){
 
       for(i = 0; i < code->qtd_processador; i++){
 
-         // [debug] Observando cada processador em cada
-         // ciclo do fluxo temporal
-         if(debug){
-            printf("\nChecando CPU[%d]\n", i);
-         }
+         if(code->grau_processador[i] > 0){
 
-         // Verifica se tarefa apontada pelo processadores
-         // Foi concluída no laço anterior
-         if(done_tasks[code->alocacao[i][cpu_points[i]]] == TRUE){
-
-            //[debug]: Sinalizando tarefa concluída
+            // [debug] Observando cada processador em cada
+            // ciclo do fluxo temporal
             if(debug){
-               printf("Tarefa %d Concluida!\n", code->alocacao[i][cpu_points[i]]);
+               printf("\nChecando CPU[%d]\n", i);
             }
 
-            // Se sim: aponta para próxima tarefa da lista
-            if(cpu_points[i] < code->grau_processador[i]-1){
+            // Verifica se tarefa apontada pelo processadores
+            // Foi concluída no laço anterior
+            if(done_tasks[code->alocacao[i][cpu_points[i]]] == TRUE){
 
-               cpu_points[i]++;
-               cpu_cost[i] = recebe_CustoExec(dag, code->alocacao[i][cpu_points[i]]);
+               //[debug]: Sinalizando tarefa concluída
+               if(debug){
+                  printf("Tarefa %d Concluida!\n", code->alocacao[i][cpu_points[i]]);
+               }
 
-               // Se a tarefa foi concluida, deve-se aproveitar o ciclo e observar se
-               // podemos começar a execução da próxima tarefa.
+               // Se sim: aponta para próxima tarefa da lista
+               if(cpu_points[i] < code->grau_processador[i]-1){
 
+                  cpu_points[i]++;
+                  cpu_cost[i] = recebe_CustoExec(dag, code->alocacao[i][cpu_points[i]]);
+
+                  // Se a tarefa foi concluida, deve-se aproveitar o ciclo e observar se
+                  // podemos começar a execução da próxima tarefa.
+
+                  ready_tasks[code->alocacao[i][cpu_points[i]]] =
+                     checa_Precedentes(dag, done_tasks, code->alocacao[i][cpu_points[i]]);
+
+                  // Após verificar os pais, a resposta é.....
+                  // [debug] Imprimindo a respostas das tarefas pais
+                  if(debug){
+                     if(ready_tasks[code->alocacao[i][cpu_points[i]]]){
+                        printf("Resposta dos pais de t%d: S1M\n", code->alocacao[i][cpu_points[i]]);
+                     }
+                     else{
+                        printf("Resposta dos pais de t%d: NA0\n", code->alocacao[i][cpu_points[i]]);
+                     }
+                  }
+
+                  if(ready_tasks[code->alocacao[i][cpu_points[i]]] == TRUE){
+
+                     // Se a tarefa possuir custo diferente e zero
+                     if(recebe_CustoExec(dag, code->alocacao[i][cpu_points[i]]) != 0){
+
+                        //[debug]: Sinalizando que tarefa nao foi finalizada no ciclo
+                        if(debug){
+                           printf("Tarefa t%d ainda nao acabou!\n", code->alocacao[i][cpu_points[i]]);
+                        }
+
+                        cpu_cost[i] -= 1;
+                        cpu_time[i]++;
+                     }
+                     // Quando for a ultima tarefa
+                     else if(code->alocacao[i][cpu_points[i]] == code->qtd_task - 1){
+                        done_tasks[code->alocacao[i][cpu_points[i]]] = TRUE;
+                     }
+
+                  }
+                  else{
+                     // Senão: aumenta ociosidade
+                     cpu_time[i]++;
+                  }
+
+               }//fim[tarefa concluida, tentanto executar proxima]
+            }
+            else{
+
+               // Senão: verifica se pode executar
                ready_tasks[code->alocacao[i][cpu_points[i]]] =
                   checa_Precedentes(dag, done_tasks, code->alocacao[i][cpu_points[i]]);
 
@@ -241,10 +312,10 @@ void calcula_makespan_TLE(TLE *code, GrafoMatriz *dag, short debug){
 
                if(ready_tasks[code->alocacao[i][cpu_points[i]]] == TRUE){
 
-                  // Se a tarefa possuir custo diferente e zero
+                  // Se a tarefa possuir custo diferente de zero
                   if(recebe_CustoExec(dag, code->alocacao[i][cpu_points[i]]) != 0){
 
-                     //[debug]: Sinalizando que tarefa nao foi finalizada no ciclo
+                     //[debug] Sinalizando que tarefa não terminou
                      if(debug){
                         printf("Tarefa t%d ainda nao acabou!\n", code->alocacao[i][cpu_points[i]]);
                      }
@@ -256,66 +327,27 @@ void calcula_makespan_TLE(TLE *code, GrafoMatriz *dag, short debug){
                   else if(code->alocacao[i][cpu_points[i]] == code->qtd_task - 1){
                      done_tasks[code->alocacao[i][cpu_points[i]]] = TRUE;
                   }
-
                }
                else{
                   // Senão: aumenta ociosidade
                   cpu_time[i]++;
                }
 
-            }//fim[tarefa concluida, tentanto executar proxima]
-         }
-         else{
+            }//fim[tarefa terminou?]
 
-            // Senão: verifica se pode executar
-            ready_tasks[code->alocacao[i][cpu_points[i]]] =
-               checa_Precedentes(dag, done_tasks, code->alocacao[i][cpu_points[i]]);
-
-            // Após verificar os pais, a resposta é.....
-            // [debug] Imprimindo a respostas das tarefas pais
-            if(debug){
-               if(ready_tasks[code->alocacao[i][cpu_points[i]]]){
-                  printf("Resposta dos pais de t%d: S1M\n", code->alocacao[i][cpu_points[i]]);
-               }
-               else{
-                  printf("Resposta dos pais de t%d: NA0\n", code->alocacao[i][cpu_points[i]]);
-               }
-            }
-
-            if(ready_tasks[code->alocacao[i][cpu_points[i]]] == TRUE){
-
-               // Se a tarefa possuir custo diferente de zero
-               if(recebe_CustoExec(dag, code->alocacao[i][cpu_points[i]]) != 0){
-
-                  //[debug] Sinalizando que tarefa não terminou
-                  if(debug){
-                     printf("Tarefa t%d ainda nao acabou!\n", code->alocacao[i][cpu_points[i]]);
-                  }
-
-                  cpu_cost[i] -= 1;
-                  cpu_time[i]++;
-               }
-               // Quando for a ultima tarefa
-               else if(code->alocacao[i][cpu_points[i]] == code->qtd_task - 1){
-                  done_tasks[code->alocacao[i][cpu_points[i]]] = TRUE;
-               }
-            }
-            else{
-               // Senão: aumenta ociosidade
-               cpu_time[i]++;
-            }
-
-         }//fim[tarefa terminou?]
+         }//fim[Se CPU não for vazia]
 
       }//fim[percorrendo cpus]
 
       // Laço para finalizar as tarefas alocadas
       for(j = 0; j < code->qtd_processador; j++){
 
-         // Verificar se tarefa acabou para cada processador;
-         // "Se custo necessario foi finalizado e t não é a última tarefa"
-         if(cpu_cost[j] == 0 && code->alocacao[j][cpu_points[j]] != code->qtd_task - 1){
-            done_tasks[code->alocacao[j][cpu_points[j]]] = TRUE;
+         if(code->grau_processador[j] > 0){
+            // Verificar se tarefa acabou para cada processador;
+            // "Se custo necessario foi finalizado e t não é a última tarefa"
+            if(cpu_cost[j] == 0 && code->alocacao[j][cpu_points[j]] != code->qtd_task - 1){
+               done_tasks[code->alocacao[j][cpu_points[j]]] = TRUE;
+            }
          }
 
       }//fim[atualizando cpus no mesmo ciclo]
@@ -324,7 +356,11 @@ void calcula_makespan_TLE(TLE *code, GrafoMatriz *dag, short debug){
       if(debug){
          printf("\nRelatorio das CPUS!!!\n");
          for(j = 0; j < code->qtd_processador; j++){
-            printf("Tempos das CPU[%d] [point:%d]: %d\n", j, cpu_points[j], cpu_time[j]);
+
+            if(code->grau_processador[j] > 0)
+               printf("Tempos da CPU[%d] [point:%d]: %d\n", j, cpu_points[j], cpu_time[j]);
+            else
+               printf("Tempo da CPU[%d] [point:%d]: cpu vazia!\n", j, cpu_points[j]);
          }
       }
 
@@ -343,10 +379,14 @@ void calcula_makespan_TLE(TLE *code, GrafoMatriz *dag, short debug){
    */
 
    // Obtendo maior tempo de finalização
-   makespan = cpu_time[0];
-   for(i = 1; i < code->qtd_processador; i++){
-      if(cpu_time[i] > makespan)
-         makespan = cpu_time[i];
+   makespan = 0;
+   for(i = 0; i < code->qtd_processador; i++){
+
+      if(code->grau_processador[i] > 0){
+         if(cpu_time[i] > makespan)
+            makespan = cpu_time[i];
+
+      }//fim[se cpu não for vazia]
    }
    code->makespan = makespan;
 

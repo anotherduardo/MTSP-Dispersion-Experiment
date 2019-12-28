@@ -34,7 +34,9 @@ Populacao *cria_Populacao(int pop_size, GrafoMatriz *dag, int qtd_cpus){
          atribuir_ID_TLE(pop->pop_tle[i], i);            // marcando o id na TLE
          atribuir_ID_MSE(pop->pop_mse[i], i);            // marcando o id na MSE
 
+         //[debug] Para checar as codificacoe geradas
          //debug_TLE(pop->pop_tle[i]);
+         //debug_MSE(pop->pop_mse[i]);
 
       }//fim[alocando as populacoes]
    }

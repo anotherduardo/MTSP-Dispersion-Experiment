@@ -13,7 +13,7 @@ TLE *cria_TLE(GrafoMatriz *dag, int qtd_processador);
 
 void libera_TLE(TLE *code);
 
-void distribui_Sequencia_TLE(TLE *code, GrafoMatriz *dag);
+void distribui_Sequencia_TLE(TLE *code, GrafoMatriz *dag, short tipo);
 
 void atribuir_ID_TLE(TLE *code, int id);
 

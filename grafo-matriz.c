@@ -234,9 +234,13 @@ void calcula_AlturaMatriz_rand(GrafoMatriz *gr){
 
       if(gr->altura[i] == menor)
          gr->alturaR[i] = menor;
-      else
+      else{
          // regra do rand: (rand() % invertavalo) + inicio
+
+         //[debug]: resolvendo problema da divisao por zero
+         //printf("Valor do intervalo do Rand: %d\n", (menor+1)-gr->altura[i]);
          gr->alturaR[i] = (rand() % ((menor+1)-gr->altura[i])) + gr->altura[i];
+      }
 
    }//fim[tarefas]
 
@@ -364,6 +368,7 @@ void debug_GrafoMatriz(GrafoMatriz* gf){
 void shuffle(int *array, size_t n){
 
    //Fonte: https://stackoverflow.com/questions/6127503/shuffle-array-in-c
+   //printf("Entrou no Shuffle!\n");
    if (n > 1){
 
       size_t i;
@@ -375,5 +380,6 @@ void shuffle(int *array, size_t n){
          array[i] = t;
       }
    }
+   //printf("Shuffle Executado!\n");
 
 }//fim[shuffle]

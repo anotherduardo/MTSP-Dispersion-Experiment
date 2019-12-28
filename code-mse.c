@@ -55,7 +55,6 @@ MSE *cria_MSE(GrafoMatriz *dag, int qtd_processador){
 
 }//fim[cria_MSE]
 
-
 void libera_MSE(MSE *code){
 
    // Destruindo os vetores da MSE
@@ -204,8 +203,10 @@ void calcula_makespan_MSE(MSE *code, GrafoMatriz *dag, short debug){
    for(i = 0; i < code->qtd_cpus; i++){
       if(alocacao[i][0] == 0){
          done_tasks[0] = TRUE;
-         cpu_points[i]++;
-         cpu_cost[i] = recebe_CustoExec(dag, alocacao[i][cpu_points[i]]);
+         if(code->grau_cpu[i] > 1){
+            cpu_points[i]++;
+            cpu_cost[i] = recebe_CustoExec(dag, alocacao[i][cpu_points[i]]);
+         }
       }
 
    }//fim[atualizando custos iniciais]
@@ -364,7 +365,7 @@ void calcula_makespan_MSE(MSE *code, GrafoMatriz *dag, short debug){
             if(code->grau_cpu[j] > 0)
                printf("Tempos da CPU[%d] [point:%d]: %d\n", j, cpu_points[j], cpu_time[j]);
             else
-               printf("Tempo da CPU[%d] [point:%d]: cpu vazia!", j, cpu_points[j]);
+               printf("Tempo da CPU[%d] [point:%d]: cpu vazia!\n", j, cpu_points[j]);
          }
       }//fim[relatorioCPU]
 
@@ -383,10 +384,9 @@ void calcula_makespan_MSE(MSE *code, GrafoMatriz *dag, short debug){
    */
 
    // Obtendo maior tempo de finalização
-
-   //makespan = cpu_time[0];
+   
    makespan = 0;
-   for(i = 1; i < code->qtd_cpus; i++){
+   for(i = 0; i < code->qtd_cpus; i++){
 
       if(code->grau_cpu[i] > 0){
          if(cpu_time[i] > makespan)

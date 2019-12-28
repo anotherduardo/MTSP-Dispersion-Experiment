@@ -355,7 +355,6 @@ void executa_Experimento(DadosExperimento *exp){
                break;
 
 
-
             // dir = 2
             case 300:
 
@@ -1078,9 +1077,9 @@ void executa_Experimento(DadosExperimento *exp){
 
    }//fim[pack1]
 
-   /*
    else if(strcmp(exp->nome_arquivo, "benchmark/StandardTaskGraphs-wt-CC-v2") == 0){
 
+      strcat(dir_log_original, "log/StandardTaskGraphs-wt-CC-v2/");
 
       dir[0]  = 50;
       dir[1]  = 100;
@@ -1104,9 +1103,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 0
             case 50:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1115,12 +1115,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"50");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1130,9 +1158,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 1
             case 100:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1141,12 +1170,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"100");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1156,9 +1213,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 2
             case 300:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1167,12 +1225,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"300");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1182,9 +1268,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 3
             case 500:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1193,12 +1280,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"500");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1208,9 +1323,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 4
             case 750:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1219,12 +1335,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"750");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1234,9 +1378,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 5
             case 1000:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1245,12 +1390,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"1000");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1260,9 +1433,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 6
             case 1250:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1271,12 +1445,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"1250");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1286,9 +1488,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 7
             case 1500:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1297,12 +1500,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"1500");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1312,9 +1543,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 8
             case 1750:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1323,12 +1555,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"1750");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1338,9 +1598,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 9
             case 2000:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1349,12 +1610,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"2000");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1364,9 +1653,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 10
             case 2500:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1375,12 +1665,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"2500");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1390,9 +1708,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 11
             case 3000:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1401,12 +1720,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"3000");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1416,9 +1763,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 12
             case 3500:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1427,12 +1775,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"3500");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1442,9 +1818,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 13
             case 4000:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1453,12 +1830,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"4000");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1468,9 +1873,10 @@ void executa_Experimento(DadosExperimento *exp){
             // dir = 14
             case 5000:
 
-               strcpy(dir_original, exp->nome_arquivo);
-
                for(j = 0; j < 180; j++){
+
+                  strcpy(dir_log_atual, dir_log_original);
+                  strcpy(dir_original, exp->nome_arquivo);
 
                   // mesclando nome do  diretorio
                   strcat(exp->nome_arquivo,"/");
@@ -1479,12 +1885,40 @@ void executa_Experimento(DadosExperimento *exp){
 
                   // mesclando nome do arquivo
                   dir_codigo[0] = '\0';
-                  gerarcodigo_Arquivo(dir_codigo,j);
+                  gerarcodigo_Arquivo(dir_codigo, j, "rand", ".stg");
                   strcat(exp->nome_arquivo,dir_codigo);
 
                   printf("J = %2d file:%s\n", j, exp->nome_arquivo);
+
                   // Espaço para testar as codificações
-                  //...
+
+                  aponta_Arquivo(exp);
+                  exp->gf = ler_arquivo_stg_Matriz(exp->arquivo);
+                  calcula_AlturaMatriz_rand(exp->gf);
+
+                  // Espaço para testar as codificacoes
+                  // ...
+
+                  // Calculando o makespan
+                  pop = NULL;
+                  pop = cria_Populacao(exp->pop_size, exp->gf, exp->qtd_cpus);
+                  calcula_makespan_Populacao(pop, exp->gf, exp->debug);
+
+                  // Imprimindo relatório
+                  dir_log_codigo[0] = '\0';
+                  gerarcodigo_Arquivo(dir_log_codigo, j, "sample",".csv");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,"5000");
+                  strcat(dir_log_atual,"/");
+                  strcat(dir_log_atual,dir_log_codigo);
+                  imprime_Log_Experimento(pop, dir_log_atual);
+
+                  //.....
+                  libera_Populacao(pop);
+                  libera_GrafoMatriz(exp->gf);
+                  fecha_Arquivo(exp);
+                  strcpy(exp->nome_arquivo, dir_original);
+
                   // recuperando caminho original
                   strcpy(exp->nome_arquivo, dir_original);
 
@@ -1497,6 +1931,7 @@ void executa_Experimento(DadosExperimento *exp){
 
    }//fim[pack2]
 
+   /*
    else if(strcmp(exp->nome_arquivo, "benchmark/StandardTaskGraphs-wt-CC-AppPrograms") == 0){
 
       // Neste diretorio existem somente tres arquivos.
@@ -1571,7 +2006,7 @@ void imprime_Log_Experimento(Populacao *pop, char *path){
       // TLE
       for(i = 0; i < j; i++){
          fprintf(arquivo, "%d,", recebe_makespan_TLE((recebe_TLE(pop, i))));
-         fprintf(arquivo, "%d,\n", recebe_makespan_MSE((recebe_MSE(pop, i))));
+         fprintf(arquivo, "%d\n", recebe_makespan_MSE((recebe_MSE(pop, i))));
       }
 
       // MSE

@@ -4,7 +4,7 @@
 
 #define TRUE 1          // S1M
 #define FALSE 0         // NA0
-#define MAXHEIGHT 1000  // valor maximo de altura para ordenacao
+#define MAXHEIGHT 100000  // valor maximo de altura para ordenacao
 
 typedef struct grafomatriz GrafoMatriz;
 
